@@ -5,10 +5,9 @@
 //  Created by manabe on 2022/11/11.
 //
 import CoreLocation
-import CoreBluetooth
 import MapKit
 
-class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate, CBCentralManagerDelegate {
+class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     static let shared = LocationManager()
     
@@ -39,7 +38,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate, CB
     }
 
     let manager = CLLocationManager()
-    var centralManager: CBCentralManager!
     @Published var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 0, longitude: 0),
         span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
@@ -54,7 +52,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate, CB
         manager.allowsBackgroundLocationUpdates = true // バックグラウンド更新を許可
         manager.pausesLocationUpdatesAutomatically = false // 自動的に位置情報更新を一時停止しない
         
-        centralManager = CBCentralManager(delegate: self, queue: nil)
         checkAuthorizationStatus()
     }
     
@@ -147,23 +144,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate, CB
             // 必要ならばユーザーに許可を促す処理を追加
         } else {
             print("Failed to find user's location: \(error.localizedDescription)")
-        }
-    }
-    
-    // MARK: - CBCentralManagerDelegate methods
-    
-    func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        if central.state == .poweredOn {
-            centralManager.scanForPeripherals(withServices: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey: NSNumber(value: true)])
-        } else {
-            print("Bluetooth is not available.")
-        }
-    }
-    
-    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
-        if let name = peripheral.name {
-            print("Discovered \(name) with MAC address \(peripheral.identifier.uuidString) and RSSI \(RSSI)")
-            // MACアドレス (peripheral.identifier.uuidString) と電波強度 (RSSI) を処理
         }
     }
 }
