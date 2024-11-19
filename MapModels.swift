@@ -7,6 +7,7 @@
 import CoreLocation
 import MapKit
 
+
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     static let shared = LocationManager()
@@ -16,6 +17,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private var myLongitude: Double = 0
     private var myAltitude: Double = 0
     private var myFloor: Int = 0
+    private var timestamp = { let f = DateFormatter(); f.dateFormat = "yyyyMMddHHmmss"; f.timeZone = TimeZone.current; return f.string(from: Date()) }()
     
     var id: String {
         return myDeviceId
@@ -38,6 +40,8 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
 
     let manager = CLLocationManager()
+    
+    // region を @Published にして、ビューと連携する
     @Published var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 0, longitude: 0),
         span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
@@ -98,17 +102,30 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
 
+        // 新しい位置情報を元に中心座標を更新
         let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         
+        // regionの中心座標を更新
         DispatchQueue.main.async {
-            // 現在のregionのspanを保持したままcenterだけを更新
             self.region = MKCoordinateRegion(center: center, span: self.region.span)
         }
 
+        // その他の位置情報を更新
         myLatitude = location.coordinate.latitude
         myLongitude = location.coordinate.longitude
         myAltitude = location.altitude
         myFloor = location.floor?.level ?? 0
+        
+        // 現在の日時を取得
+        let currentDate = Date()
+
+        // 日付フォーマットを設定
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMddHHmmss"
+
+        // フォーマット済みの文字列を取得
+        timestamp = formatter.string(from: currentDate)
+        
         // 位置情報が有効である場合にのみデータを送信
         if myLatitude != 0 && myLongitude != 0 {
             postData()
@@ -116,11 +133,25 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func postData() {
-        let baseUrl: String = "http://arta.exp.mnb.ees.saitama-u.ac.jp/ana/staff/post.php" + "?id=" + self.myDeviceId + "&lat=" + String(self.myLatitude) + "&lon=" + String(self.myLongitude) + "&alt=" + String(self.myAltitude) + "&fl=" + String(self.myFloor)
+        let baseUrl: String = "http://arta.exp.mnb.ees.saitama-u.ac.jp/oac/common/post_location.php"
         
-        let url = URL(string: baseUrl)!
+        print(baseUrl)
+        
+        var urlComponents = URLComponents(string: baseUrl)!
+        urlComponents.queryItems = [
+            URLQueryItem(name: "dev", value: self.myDeviceId),
+            URLQueryItem(name: "lat", value: String(self.myLatitude)),
+            URLQueryItem(name: "lon", value: String(self.myLongitude)),
+            URLQueryItem(name: "ts", value: String(self.timestamp))
+        ]
+
+        guard let url = urlComponents.url else {
+            fatalError("Invalid URL")
+        }
+        print(url)
+        
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
+        request.httpMethod = "GET"
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else { return }
             do {
@@ -128,6 +159,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
                 print(object)
             }
             catch let error {
+                print("error")
                 print(error)
             }
         }
