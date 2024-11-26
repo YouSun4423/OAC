@@ -52,9 +52,10 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         manager.delegate = self
         manager.requestAlwaysAuthorization() // 常に位置情報を利用許可をリクエスト
         manager.desiredAccuracy = kCLLocationAccuracyBest
-        manager.distanceFilter = kCLDistanceFilterNone // 無制限の距離フィルター
+        manager.distanceFilter = 5 //3mごとに位置情報を更新
         manager.allowsBackgroundLocationUpdates = true // バックグラウンド更新を許可
         manager.pausesLocationUpdatesAutomatically = false // 自動的に位置情報更新を一時停止しない
+        manager.activityType = .other
         
         checkAuthorizationStatus()
     }
