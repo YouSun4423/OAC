@@ -287,10 +287,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MyLocation/Preview Content\"";
-				DEVELOPMENT_TEAM = J3W4U74QVY;
+				DEVELOPMENT_TEAM = 3SZ9D5PW2D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyLocation/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OAC;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "アプリがBluetoothを使用します。";
 				INFOPLIST_KEY_NSCameraUsageDescription = "QRコードの読み取りのためにアプリがカメラを使用します\U0010";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "アプリがバックグラウンドで位置情報を使用します。";
@@ -306,7 +307,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "jp.su.mnb.OAC-Application";
+				PRODUCT_BUNDLE_IDENTIFIER = jp.su.mnb.OAC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -322,10 +323,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MyLocation/Preview Content\"";
-				DEVELOPMENT_TEAM = J3W4U74QVY;
+				DEVELOPMENT_TEAM = 3SZ9D5PW2D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyLocation/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OAC;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "アプリがBluetoothを使用します。";
 				INFOPLIST_KEY_NSCameraUsageDescription = "QRコードの読み取りのためにアプリがカメラを使用します\U0010";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "アプリがバックグラウンドで位置情報を使用します。";
@@ -341,7 +343,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "jp.su.mnb.OAC-Application";
+				PRODUCT_BUNDLE_IDENTIFIER = jp.su.mnb.OAC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
