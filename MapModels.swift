@@ -52,7 +52,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         manager.delegate = self
         manager.requestAlwaysAuthorization() // 常に位置情報を利用許可をリクエスト
         manager.desiredAccuracy = kCLLocationAccuracyBest
-        manager.distanceFilter = 5 //3mごとに位置情報を更新
+        manager.distanceFilter = 5 //5mごとに位置情報を更新
         manager.allowsBackgroundLocationUpdates = true // バックグラウンド更新を許可
         manager.pausesLocationUpdatesAutomatically = false // 自動的に位置情報更新を一時停止しない
         manager.activityType = .other
@@ -129,14 +129,14 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         
         // 位置情報が有効である場合にのみデータを送信
         if myLatitude != 0 && myLongitude != 0 {
-            postData()
+            DispatchQueue.main.async {
+                            self.postData()
+            }
         }
     }
     
     func postData() {
         let baseUrl: String = "http://arta.exp.mnb.ees.saitama-u.ac.jp/oac/common/post_location.php"
-        
-        print(baseUrl)
         
         var urlComponents = URLComponents(string: baseUrl)!
         urlComponents.queryItems = [
@@ -149,23 +149,26 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         guard let url = urlComponents.url else {
             fatalError("Invalid URL")
         }
-        print(url)
-        
         var request = URLRequest(url: url)
-        request.httpMethod = "GET"
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard let data = data else { return }
-            do {
-                let object = try JSONSerialization.jsonObject(with: data, options: [])
-                print(object)
+            guard let data = data else {
+                print("データがありません: \(error?.localizedDescription ?? "不明なエラー")")
+                return
             }
-            catch let error {
-                print("error")
-                print(error)
+            
+            // サーバーからのレスポンスを文字列として処理
+            if let responseString = String(data: data, encoding: .utf8) {
+                print("サーバーからのレスポンス: \(responseString)")
+            } else {
+                print("レスポンスの文字列変換に失敗しました。")
             }
         }
         task.resume()
     }
+
     
     func updateLocation() {
         manager.requestLocation()

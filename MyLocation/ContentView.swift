@@ -20,7 +20,7 @@ struct ContentView: View {
     
     
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 50) {
                     // アコーディオンパネル
                     DisclosureGroup("詳細情報") {
                         VStack(spacing: 20) {
@@ -56,8 +56,9 @@ struct ContentView: View {
                             
                             // 送信ボタン
                             Button("送信") {
-                                print("post")
-                                postData()
+                                DispatchQueue.main.async {
+                                        manager.postData()
+                                    }
                             }
                             .disabled(OACNumber.isEmpty) // 入力がない場合は無効化
                         }
@@ -80,56 +81,6 @@ struct ContentView: View {
             errorMessage = "QRコードの内容が10桁の整数ではありません。"
         }
     }
-    
-    func postData() {
-        // URLのパーツを個別に作成
-        let baseUrl = "http://arta.exp.mnb.ees.saitama-u.ac.jp/oac/common/update_passenger_contact.php"
-        
-        // リクエストボディに送るデータを辞書形式で作成
-        let parameters: [String: Any] = [
-            "oac": self.OACNumber,
-            "spid": self.manager.id,
-            "tel": self.phoneNumber,
-            "mail": self.mailAddress
-        ]
-        
-        // URL作成
-        guard let url = URL(string: baseUrl) else {
-            print("URLが無効です: \(baseUrl)")
-            return
-        }
-
-        // JSONにエンコード
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: parameters, options: [])
-            
-            // リクエスト作成
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.httpBody = jsonData
-            
-            // データ送信
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                guard let data = data else {
-                    print("データがありません: \(error?.localizedDescription ?? "不明なエラー")")
-                    return
-                }
-                
-                // サーバーからのレスポンスを確認
-                if let responseString = String(data: data, encoding: .utf8) {
-                    print("サーバーからのレスポンス: \(responseString)")
-                }
-
-
-            }
-            task.resume()
-            
-        } catch let error {
-            print("JSONエンコードエラー: \(error)")
-        }
-    }
-
 
     
     // 初回インストール時チェック
