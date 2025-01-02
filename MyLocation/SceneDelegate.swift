@@ -28,7 +28,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let hasLaunchedBefore = UserDefaults.standard.bool(forKey: "hasLaunchedBefore")
         if !hasLaunchedBefore {
             UserDefaults.standard.set(true, forKey: "hasLaunchedBefore")
-            // UserDefaults.standard.synchronize() はiOS 12以降は必要ありません
             return true // 初回起動
         }
         return false // 初回起動ではない
@@ -36,8 +35,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func sceneDidBecomeActive(_ scene: UIScene) {
         // アプリがフォアグラウンドに入ったときの処理
-        // BLEスキャンを開始
-        //LocationManager.shared.centralManager.scanForPeripherals(withServices: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey: true])
 
     }
 

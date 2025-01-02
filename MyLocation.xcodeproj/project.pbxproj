@@ -8,9 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		043B98722C4A13E30053B092 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043B98712C4A13E30053B092 /* AppDelegate.swift */; };
+		04A2B8792D26BC7E00CDE558 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464666D2D26B8E400A190E5 /* MapView.swift */; };
+		04A2B87A2D26BC8200CDE558 /* QRCodeScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464666E2D26B92E00A190E5 /* QRCodeScanView.swift */; };
+		04A2B87D2D26C5BF00CDE558 /* UserLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A2B87C2D26C5B100CDE558 /* UserLocationView.swift */; };
 		04CC34792C8AC50500BBE6FF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CC34782C8AC50500BBE6FF /* SceneDelegate.swift */; };
 		04CC347B2C8AC6EB00BBE6FF /* MyLocationApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CC347A2C8AC6EB00BBE6FF /* MyLocationApp.swift */; };
-		04CC347D2CEC0D4100BBE6FF /* QRScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CC347C2CEC0D4100BBE6FF /* QRScannerView.swift */; };
+		04CC347D2CEC0D4100BBE6FF /* QRScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CC347C2CEC0D4100BBE6FF /* QRScannerViewController.swift */; };
 		203B66B7291DD4D90036927B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203B66B6291DD4D90036927B /* ContentView.swift */; };
 		203B66B9291DD4DA0036927B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 203B66B8291DD4DA0036927B /* Assets.xcassets */; };
 		203B66BC291DD4DA0036927B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 203B66BB291DD4DA0036927B /* Preview Assets.xcassets */; };
@@ -19,9 +22,12 @@
 
 /* Begin PBXFileReference section */
 		043B98712C4A13E30053B092 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0464666D2D26B8E400A190E5 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		0464666E2D26B92E00A190E5 /* QRCodeScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanView.swift; sourceTree = "<group>"; };
+		04A2B87C2D26C5B100CDE558 /* UserLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationView.swift; sourceTree = "<group>"; };
 		04CC34782C8AC50500BBE6FF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		04CC347A2C8AC6EB00BBE6FF /* MyLocationApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLocationApp.swift; sourceTree = "<group>"; };
-		04CC347C2CEC0D4100BBE6FF /* QRScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerView.swift; sourceTree = "<group>"; };
+		04CC347C2CEC0D4100BBE6FF /* QRScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerViewController.swift; sourceTree = "<group>"; };
 		203B66B1291DD4D90036927B /* MyLocation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyLocation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		203B66B6291DD4D90036927B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		203B66B8291DD4DA0036927B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -41,12 +47,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		046466692D26B7DC00A190E5 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0464666B2D26B88100A190E5 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				04CC347C2CEC0D4100BBE6FF /* QRScannerViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		0464666C2D26B8DD00A190E5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				04A2B87C2D26C5B100CDE558 /* UserLocationView.swift */,
+				0464666E2D26B92E00A190E5 /* QRCodeScanView.swift */,
+				0464666D2D26B8E400A190E5 /* MapView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		203B66A8291DD4D90036927B = {
 			isa = PBXGroup;
 			children = (
-				04CC34782C8AC50500BBE6FF /* SceneDelegate.swift */,
-				043B98712C4A13E30053B092 /* AppDelegate.swift */,
-				203B66C3291DD7570036927B /* MapModels.swift */,
 				203B66B3291DD4D90036927B /* MyLocation */,
 				203B66B2291DD4D90036927B /* Products */,
 			);
@@ -68,7 +96,12 @@
 				203B66B8291DD4DA0036927B /* Assets.xcassets */,
 				203B66BA291DD4DA0036927B /* Preview Content */,
 				04CC347A2C8AC6EB00BBE6FF /* MyLocationApp.swift */,
-				04CC347C2CEC0D4100BBE6FF /* QRScannerView.swift */,
+				0464666C2D26B8DD00A190E5 /* View */,
+				0464666B2D26B88100A190E5 /* ViewController */,
+				046466692D26B7DC00A190E5 /* Controller */,
+				04CC34782C8AC50500BBE6FF /* SceneDelegate.swift */,
+				043B98712C4A13E30053B092 /* AppDelegate.swift */,
+				203B66C3291DD7570036927B /* MapModels.swift */,
 			);
 			path = MyLocation;
 			sourceTree = "<group>";
@@ -151,11 +184,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04A2B87A2D26BC8200CDE558 /* QRCodeScanView.swift in Sources */,
+				04A2B87D2D26C5BF00CDE558 /* UserLocationView.swift in Sources */,
+				04A2B8792D26BC7E00CDE558 /* MapView.swift in Sources */,
 				04CC347B2C8AC6EB00BBE6FF /* MyLocationApp.swift in Sources */,
 				043B98722C4A13E30053B092 /* AppDelegate.swift in Sources */,
 				203B66B7291DD4D90036927B /* ContentView.swift in Sources */,
 				203B66C4291DD7570036927B /* MapModels.swift in Sources */,
-				04CC347D2CEC0D4100BBE6FF /* QRScannerView.swift in Sources */,
+				04CC347D2CEC0D4100BBE6FF /* QRScannerViewController.swift in Sources */,
 				04CC34792C8AC50500BBE6FF /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -287,13 +323,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MyLocation/Preview Content\"";
-				DEVELOPMENT_TEAM = 3SZ9D5PW2D;
+				DEVELOPMENT_TEAM = J3W4U74QVY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyLocation/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = OAC;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "アプリがBluetoothを使用します。";
-				INFOPLIST_KEY_NSCameraUsageDescription = "QRコードの読み取りのためにアプリがカメラを使用します\U0010";
+				INFOPLIST_KEY_NSCameraUsageDescription = "QRコードの読み取りのためにアプリがカメラを使用します";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "アプリがバックグラウンドで位置情報を使用します。";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -307,7 +343,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = jp.su.mnb.OAC;
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.su.mnb.OAC-20250102";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -327,13 +363,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MyLocation/Preview Content\"";
-				DEVELOPMENT_TEAM = 3SZ9D5PW2D;
+				DEVELOPMENT_TEAM = J3W4U74QVY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyLocation/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = OAC;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "アプリがBluetoothを使用します。";
-				INFOPLIST_KEY_NSCameraUsageDescription = "QRコードの読み取りのためにアプリがカメラを使用します\U0010";
+				INFOPLIST_KEY_NSCameraUsageDescription = "QRコードの読み取りのためにアプリがカメラを使用します";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "アプリがバックグラウンドで位置情報を使用します。";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -347,7 +383,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = jp.su.mnb.OAC;
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.su.mnb.OAC-20250102";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

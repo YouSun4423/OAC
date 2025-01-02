@@ -130,12 +130,12 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         // 位置情報が有効である場合にのみデータを送信
         if myLatitude != 0 && myLongitude != 0 {
             DispatchQueue.main.async {
-                            self.postData()
+                self.postLocationData()
             }
         }
     }
     
-    func postData() {
+    func postLocationData() {
         let baseUrl: String = "http://arta.exp.mnb.ees.saitama-u.ac.jp/oac/common/post_location.php"
         
         var urlComponents = URLComponents(string: baseUrl)!
