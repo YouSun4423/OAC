@@ -12,27 +12,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let _ = (scene as? UIWindowScene) else { return }
-        
-        // 初回起動判定
-        if isFirstLaunch() {
-            // 初回起動時の処理
-            print("初回起動です")
-            return
-        }
-        print("初回起動ではありません")
-    }
-
-    private func isFirstLaunch() -> Bool {
-        let hasLaunchedBefore = UserDefaults.standard.bool(forKey: "hasLaunchedBefore")
-        if !hasLaunchedBefore {
-            UserDefaults.standard.set(true, forKey: "hasLaunchedBefore")
-            return true // 初回起動
-        }
-        return false // 初回起動ではない
-    }
-
     func sceneDidBecomeActive(_ scene: UIScene) {
         // アプリがフォアグラウンドに入ったときの処理
 
@@ -44,6 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func sceneDidEnterBackground(_ scene: UIScene) {
         // バックグラウンドに入ったときの処理
+        print("バックグラウンドへの遷移")
         LocationManager.shared.updateLocation { _ in }
     }
 }

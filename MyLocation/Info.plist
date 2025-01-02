@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>旅客情報の分析のためにトラッキングを使用します。</string>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>$(PRODUCT_BUNDLE_IDENTIFIER</string>
@@ -9,9 +11,9 @@
 	<key>NSCameraUsageDescription</key>
 	<string>QRコードの読み取りのためにアプリがカメラを使用します</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>リアルタムでの位置追跡のために位置情報を使用します。</string>
+	<string>リアルタイムでの旅客の位置追跡のために位置情報を使用します。</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>バックグラウンドでのリアルタイムでの位置追跡のために位置情報を使用します。</string>
+	<string>バックグラウンドでの旅客の位置追跡のために位置情報を使用します。</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
