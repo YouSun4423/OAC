@@ -52,15 +52,21 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.distanceFilter = 5 //5mごとに位置情報を更新
+        //manager.distanceFilter = kCLDistanceFilterNone // 移動があれば常に更新
         manager.allowsBackgroundLocationUpdates = true // バックグラウンド更新を許可
         manager.pausesLocationUpdatesAutomatically = false // 自動的に位置情報更新を一時停止しない
         manager.activityType = .other
     }
 
     func updateLocation(completion: @escaping (Bool) -> Void) {
-        manager.requestLocation()
+        manager.startUpdatingLocation()
         completion(true)
     }
+    
+    func updateLocation() {
+            manager.startUpdatingLocation()
+        }
+
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }

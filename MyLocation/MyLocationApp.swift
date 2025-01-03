@@ -42,6 +42,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         PermissionManager.shared.requestPermissions { granted in
             if granted {
                 print("すべての許可が得られました")
+                LocationManager.shared.updateLocation { _ in }
             } else {
                 print("許可が得られませんでした")
             }
