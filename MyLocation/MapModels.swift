@@ -50,49 +50,11 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     override init() {
         super.init()
         manager.delegate = self
-        manager.requestAlwaysAuthorization() // 常に位置情報を利用許可をリクエスト
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.distanceFilter = 5 //5mごとに位置情報を更新
         manager.allowsBackgroundLocationUpdates = true // バックグラウンド更新を許可
         manager.pausesLocationUpdatesAutomatically = false // 自動的に位置情報更新を一時停止しない
         manager.activityType = .other
-        
-        checkAuthorizationStatus()
-    }
-    
-    private func checkAuthorizationStatus() {
-        let status = manager.authorizationStatus
-        if status != .authorizedAlways {
-            DispatchQueue.main.async {
-                self.showAuthorizationAlert()
-            }
-        }
-    }
-    
-    private func showAuthorizationAlert() {
-        let alert = UIAlertController(title: "位置情報の許可",
-                                      message: "アプリがバックグラウンドでも位置情報を使用するために、位置情報の常に許可が必要です。設定から許可を変更してください。",
-                                      preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "設定へ移動", style: .default) { _ in
-            if let url = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
-        })
-        
-        if let rootViewController = UIApplication.shared.windows.first?.rootViewController {
-            rootViewController.present(alert, animated: true, completion: nil)
-        }
-    }
-    
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        let status = manager.authorizationStatus
-        if status == .authorizedAlways || status == .authorizedWhenInUse {
-            manager.startUpdatingLocation()
-        } else {
-            checkAuthorizationStatus()
-        }
     }
 
     func updateLocation(completion: @escaping (Bool) -> Void) {
@@ -167,11 +129,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
         }
         task.resume()
-    }
-
-    
-    func updateLocation() {
-        manager.requestLocation()
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

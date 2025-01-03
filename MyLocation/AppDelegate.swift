@@ -39,14 +39,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let mapView = UIHostingController(rootView: MapView())
         let qrCodeView = UIHostingController(rootView: QRCodeScanView())
         let userLocationView = UIHostingController(rootView: UserLocationView())
+        let settingView = UIHostingController(rootView: SettingsView())
 
         // タブアイコンとタイトルを設定
         mapView.tabBarItem = UITabBarItem(title: "マップ", image: UIImage(systemName: "map"), tag: 0)
         qrCodeView.tabBarItem = UITabBarItem(title: "QRコード", image: UIImage(systemName: "qrcode.viewfinder"), tag: 1)
         userLocationView.tabBarItem = UITabBarItem(title: "位置追跡", image: UIImage(systemName: "location"), tag: 2)
+        settingView.tabBarItem = UITabBarItem(title: "設定", image: UIImage(systemName: "ellipsis.circle"), tag: 3)
 
         // タブバーにビューを設定
-        tabBarController.viewControllers = [mapView, qrCodeView, userLocationView]
+        tabBarController.viewControllers = [mapView, qrCodeView, userLocationView, settingView]
 
         // ウィンドウのルートビューコントローラーを設定
         window = UIWindow(frame: UIScreen.main.bounds)

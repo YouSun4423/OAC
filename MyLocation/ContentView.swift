@@ -24,6 +24,11 @@ struct ContentView: View {
                 .tabItem {
                     Label("位置追跡", systemImage: "location")
                 }
+            
+            SettingsView()
+                .tabItem {
+                    Label("設定", systemImage: "ellipsis.circle")
+                }
         }
     }
 }
