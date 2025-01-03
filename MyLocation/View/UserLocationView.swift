@@ -22,15 +22,15 @@ struct WebView: UIViewRepresentable {
 
 struct UserLocationView: View {
     @State private var deviceId: String = UIDevice.current.identifierForVendor!.uuidString
-    
-    private var date: String {
-            dateFormatter()
-    }
+    @State private var currentDate: String = ""
     
     var body: some View {
         VStack {
             WebView(url: generateURL())
                 .edgesIgnoringSafeArea(.all)
+                .onAppear {
+                    updateDate()
+                }
         }
     }
     
@@ -40,26 +40,15 @@ struct UserLocationView: View {
         var components = URLComponents(string: "http://arta.exp.mnb.ees.saitama-u.ac.jp/oac/common/show_location.php")!
         components.queryItems = [
             URLQueryItem(name: "dev", value: deviceId),
-            URLQueryItem(name: "date", value: date)
+            URLQueryItem(name: "date", value: currentDate)
         ]
         return components.url!
     }
     
-    func dateFormatter() -> String{
-        /// DateFomatterクラスのインスタンス生成
-        let dateFormatter = DateFormatter()
-         
-        /// カレンダー、ロケール、タイムゾーンの設定（未指定時は端末の設定が採用される）
-        dateFormatter.calendar = Calendar(identifier: .gregorian)
-        //dateFormatter.locale = Locale(identifier: "ja_JP")
-        //dateFormatter.timeZone = TimeZone(identifier:  "Asia/Tokyo")
-         
-        /// 変換フォーマット定義
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-         
-        /// データ変換（Date→テキスト）
-        let dateString = dateFormatter.string(from: Date())
-        
-        return dateString
+    func updateDate() {
+            let dateFormatter = DateFormatter()
+            dateFormatter.calendar = Calendar(identifier: .gregorian)
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            currentDate = dateFormatter.string(from: Date())
     }
 }

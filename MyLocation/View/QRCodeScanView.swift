@@ -68,7 +68,7 @@ struct QRCodeScanView: View {
             
             // 送信ボタン
             Button("送信") {
-                postDeviceData()
+                postData()
                 showAlert = true // アラートを表示
             }
             .disabled(OACNumber.isEmpty) // 固有番号がない場合は無効化
@@ -92,37 +92,52 @@ struct QRCodeScanView: View {
         }
     }
     
-    func postDeviceData() {
-        let baseUrl: String = "http://arta.exp.mnb.ees.saitama-u.ac.jp/oac/common/update_passenger_contact.php"
-        
-        var urlComponents = URLComponents(string: baseUrl)!
-        urlComponents.queryItems = [
-            URLQueryItem(name: "oac", value: self.OACNumber),
-            URLQueryItem(name: "spid", value: String(self.DeviceId)),
-            URLQueryItem(name: "tel", value: String(self.phoneNumber)),
-            URLQueryItem(name: "email", value: String(self.mailAddress))
-        ]
-
-        guard let url = urlComponents.url else {
-            fatalError("Invalid URL")
-        }
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard let data = data else {
-                print("データがありません: \(error?.localizedDescription ?? "不明なエラー")")
+    func postData() {
+            // URLのパーツを個別に作成
+            let baseUrl = "http://arta.exp.mnb.ees.saitama-u.ac.jp/oac/common/update_passenger_contact.php"
+            
+            // リクエストボディに送るデータを辞書形式で作成
+            let parameters: [String: Any] = [
+                "oac": self.OACNumber,
+                "spid": self.DeviceId,
+                "tel": self.phoneNumber,
+                "mail": self.mailAddress
+            ]
+            
+            // URL作成
+            guard let url = URL(string: baseUrl) else {
+                print("URLが無効です: \(baseUrl)")
                 return
             }
-            
-            // サーバーからのレスポンスを文字列として処理
-            if let responseString = String(data: data, encoding: .utf8) {
-                print("サーバーからのレスポンス: \(responseString)")
-            } else {
-                print("レスポンスの文字列変換に失敗しました。")
+
+            // JSONにエンコード
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: parameters, options: [])
+                
+                // リクエスト作成
+                var request = URLRequest(url: url)
+                request.httpMethod = "POST"
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.httpBody = jsonData
+                
+                // データ送信
+                let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                    guard let data = data else {
+                        print("データがありません: \(error?.localizedDescription ?? "不明なエラー")")
+                        return
+                    }
+                    
+                    // サーバーからのレスポンスを確認
+                    if let responseString = String(data: data, encoding: .utf8) {
+                        print("サーバーからのレスポンス: \(responseString)")
+                    }
+
+
+                }
+                task.resume()
+                
+            } catch let error {
+                print("JSONエンコードエラー: \(error)")
             }
         }
-        task.resume()
-    }
 }
