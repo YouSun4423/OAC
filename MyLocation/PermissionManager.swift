@@ -64,26 +64,6 @@ class PermissionManager {
             completion(true)
         }
     }
-
-    
-    // 許可アラートを表示するメソッド
-    private func showLocationPermissionAlert() {
-        let alert = UIAlertController(
-            title: "位置情報の許可",
-            message: "アプリがバックグラウンドでも位置情報を使用するために、位置情報の常に許可が必要です。設定から許可を変更してください。",
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "設定へ移動", style: .default) { _ in
-            if let url = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
-        })
-        
-        if let rootViewController = UIApplication.shared.windows.first?.rootViewController {
-            rootViewController.present(alert, animated: true, completion: nil)
-        }
-    }
     
     func requestLocationPermission(completion: @escaping (Bool) -> Void) {
         

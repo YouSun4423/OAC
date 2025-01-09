@@ -23,17 +23,11 @@ struct SettingsView: View {
                     Spacer()
                     Text(permissionDescription(for: locationPermission))
                 }
-                .onTapGesture {
-                    requestLocationPermission()
-                }
                 
                 HStack {
                     Text("カメラ")
                     Spacer()
                     Text(permissionDescription(for: cameraPermission))
-                }
-                .onTapGesture {
-                    requestCameraPermission()
                 }
                 
                 HStack {
@@ -41,15 +35,33 @@ struct SettingsView: View {
                     Spacer()
                     Text(permissionDescription(for: trackingPermission))
                 }
-                .onTapGesture {
-                    requestTrackingPermission()
+            }
+            
+            Section(header: Text("設定")) {
+                HStack {
+                    Image(systemName: "info.circle")
+                    Text("アプリ設定")
+                    Spacer()
+                    
+                }.onTapGesture {
+                    moveSettings()
                 }
+                
             }
         }
         .onAppear {
             checkPermissions()
         }
         .navigationTitle("Settings")
+
+        
+        
+    }
+    
+    private func moveSettings() {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
     
     private func checkPermissions() {
@@ -58,10 +70,6 @@ struct SettingsView: View {
         trackingPermission = ATTrackingManager.trackingAuthorizationStatus
     }
     
-    private func requestLocationPermission() {
-        let locationManager = CLLocationManager()
-        locationManager.requestWhenInUseAuthorization()
-    }
     
     private func requestCameraPermission() {
         AVCaptureDevice.requestAccess(for: .video) { granted in
@@ -77,6 +85,23 @@ struct SettingsView: View {
                 self.trackingPermission = status
             }
         }
+    }
+    
+    // 許可アラートを表示するメソッド
+    private func showLocationPermissionAlert() {
+        let alert = UIAlertController(
+            title: "位置情報の許可",
+            message: "アプリがバックグラウンドでも位置情報を使用するために、位置情報の常に許可が必要です。設定から許可を変更してください。",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "設定へ移動", style: .default) { _ in
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        })
+        
+        alert.present(alert, animated: true, completion: nil)
     }
     
     private func permissionDescription(for status: CLAuthorizationStatus) -> String {
