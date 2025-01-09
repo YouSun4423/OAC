@@ -43,10 +43,10 @@ struct SettingsView: View {
                     Text("アプリ設定")
                     Spacer()
                     
-                }.onTapGesture {
-                    moveSettings()
                 }
                 
+            }.onTapGesture {
+                moveSettings()
             }
         }
         .onAppear {
